@@ -158,6 +158,8 @@ yunwei@ubuntu:~/guessing_game$ cargo build
 
 解决方法:删除~/.cargo/.package_cache文件，然后 cargo clean ; cargo build 
 
+源代码：
+
 ```rs
 use rand::Rng;
 use std::io;
