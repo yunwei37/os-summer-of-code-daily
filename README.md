@@ -6,7 +6,7 @@
 
 | Mon                  | Tues                 | Wed                  | Thur                 | Fri                  | Sat                  | Sun                  |
 |----------------------|----------------------|----------------------|----------------------|----------------------|----------------------|----------------------|
-|                      |                      | 1 <br> ([D1](##2))   | 2 <br> ([D2](#2))                  | 3 <br> ([D3](#3))                    | 4 <br> ([D4](#4))                    | 5 <br> ([D5](#5))                    |
+|                      |                      | 1 <br> ([D1](#day-1-202071))   | 2 <br> ([D2](#day-2-202072))                  | 3 <br> ([D3](#3))                    | 4 <br> ([D4](#4))                    | 5 <br> ([D5](#5))                    |
 | 6 <br> ([D6](#6))                   | 7 <br> ([D7](#7))                   | 8 <br> ([D8](#8))                    | 9 <br> ([D9](#9))| 10 <br> ([D10](#10))  | 11  | 12  |
 | 13  | 14  | 15  | 16  | 17  | 18  | 19  |
 | 20  | 21  | 22  | 23  | 24  | 25  | 26  |
@@ -61,7 +61,16 @@
 
 笔记：[Day2_rust_next.md](daily_documents/Day2_rust_next.md)
 
-尝试完成一些练习；
+练习：
+
+[Small exercises to get you used to reading and writing Rust code!](exercises/rustlings/readme.md)
+
+完成部分：
+
+- if
+- Variables
+- Functions
+- quiz1
 
 ### 事件2：阅读rCore的一些参考资料
 
@@ -74,7 +83,7 @@
 - 大致了解了一下rCore的基本架构和设计实现思路；
 - 大致了解了一下rust设计操作系统的相关语言特性和能力；
 
-笔记：[Day2_rCore.md][daily_documents/Day2_rCore.md]
+笔记：[Day2_rCore.md](daily_documents/Day2_rCore.md)
 
 ### 问题
 
