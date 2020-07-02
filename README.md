@@ -34,9 +34,11 @@
 - Hello, World!
 - 简单的猜猜看游戏
 
-参考今日文档记录：[1.md](daily_documents/Day1_rust_beginner.md)
+参考今日文档记录：[Day1_rust_beginner.md](daily_documents/Day1_rust_beginner.md)
 
 顺带瞻仰了一下rcore的设计论文，晚上去了一家还不错的日料店（吃到了河豚锅、海胆刺身还有很不错的土瓶烧！）
+
+>rust看起来真好玩
 
 ### 问题
 
@@ -53,13 +55,30 @@
 
 ### 事件1：rust PL again
 
-继续阅读Rust 程序设计语言；
+主要参考资料：[Rust 程序设计语言](https://kaisery.github.io/trpl-zh-cn/)
+
+继续阅读Rust 程序设计语言，梳理相关语法；
+
+笔记：[Day2_rust_next.md](daily_documents/Day2_rust_next.md)
 
 尝试完成一些练习；
 
-### 事件2：
+### 事件2：阅读rCore的一些参考资料
+
+参考资料：
+
+[Rust语言操作系统的设计与实现,王润基本科毕设论文,2019](https://github.com/rcore-os/zCore/wiki/files/wrj-thesis.pdf)
+
+[PPT: 尝试用RUST写教学操作系统, 2018](https://s4plus.ustc.edu.cn/_upload/article/files/57/c6/a2ce9bd84b2ab411967842a1334d/27730908-ef69-4827-98a7-8e387875b39b.pdf)
+
+- 大致了解了一下rCore的基本架构和设计实现思路；
+- 大致了解了一下rust设计操作系统的相关语言特性和能力；
+
+笔记：[Day2_rCore.md][daily_documents/Day2_rCore.md]
 
 ### 问题
+
+- 不知道现在rCore相比于2019年的这篇文章，具体做了哪些演进呢
 
 ### 预期计划
 

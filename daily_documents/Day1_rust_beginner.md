@@ -1,6 +1,6 @@
 # rust 入门
 
-主要参考资料：[Rust 程序设计语言](https://kaisery.github.io/trpl-zh-cn/)
+主要参考资料：[Rust 程序设计语言](https://kaisery.github.io/trpl-zh-cn/)第一章、第二章
 
 ## 在linux上面安装Rust
 
@@ -148,7 +148,7 @@ Some common cargo commands are (see all commands with --list):
 - Cargo.lock 文件确保构建是可重现的
 - cargo update 
 
-碰到了这个
+碰到了这个问题：
 
 ```
 yunwei@ubuntu:~/guessing_game$ cargo build
