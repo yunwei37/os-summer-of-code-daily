@@ -59,18 +59,35 @@
 
 继续阅读Rust 程序设计语言，梳理相关语法；
 
+- 常见编程概念
+- 所有权
+- 结构体
+- 枚举、方法匹配
+- 使用包和crate
+- 集合
+- 错误处理
+- 泛型、trait 和生命周期
+
 笔记：[Day2_rust_next.md](daily_documents/Day2_rust_next.md)
 
-练习：
+编程：小练习题：
 
 [Small exercises to get you used to reading and writing Rust code!](exercises/rustlings/readme.md)
 
-完成部分：
-
+- quiz 1-4
+- variables
 - if
-- Variables
-- Functions
-- quiz1
+- function
+- primitive_types
+- structs
+- strings
+- enums
+- tests
+- modules
+- macros
+- move_semantics
+
+>晚上去吃了甲鱼生蚝火锅x
 
 ### 事件2：阅读rCore的一些参考资料
 
@@ -85,9 +102,16 @@
 
 笔记：[Day2_rCore.md](daily_documents/Day2_rCore.md)
 
-### 问题
+### 遗留的一些问题
 
 - 不知道现在rCore相比于2019年的这篇文章，具体做了哪些演进呢
+- 对于rust的一些语法特性并没有特别清晰熟练，还需要更多的阅读和练习
+- 部分笔记还没有整理
 
 ### 预期计划
 
+- 好好睡觉，明天继续深入rust（应该可以完成 Small exercises 的部分，并看完 PL，再考虑下一步计划
+- 简单了解一下 RISC-V 体系结构；
+- 尝试编译一下rCore，简单翻翻源代码长啥子样
+
+## Day 3 2020/7/3
