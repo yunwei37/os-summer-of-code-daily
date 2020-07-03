@@ -5,13 +5,48 @@
 // I AM NOT DONE
 // Obtain the number of bytes (not characters) in the given argument
 // Add the AsRef trait appropriately as a trait bound
-fn byte_counter<T>(arg: T) -> usize {
+/*
+trait cn {
+    fn byte_counter(self) -> usize;
+}
+
+trait cc{
+    fn char_counter(self) -> usize;
+}
+
+
+impl cn for &str{
+    fn byte_counter(self:&str) -> usize {
+        self.as_ref().as_bytes().len()
+    }
+}
+
+
+impl cn for String{
+    fn byte_counter(self:String) -> usize {
+        self.as_ref().as_bytes().len()
+    }
+}
+// Obtain the number of characters (not bytes) in the given argument
+// Add the AsRef trait appropriately as a trait bound
+impl cc for &str{
+    fn char_counter(self:&str) -> usize {
+        self.as_ref().chars().count()
+    }    
+}
+
+impl cc for String{
+    fn char_counter(self:String) -> usize {
+        self.as_ref().chars().count()
+    }    
+}
+*/
+
+fn byte_counter<T: std::convert::AsRef<str>>(arg: T) -> usize {
     arg.as_ref().as_bytes().len()
 }
 
-// Obtain the number of characters (not bytes) in the given argument
-// Add the AsRef trait appropriately as a trait bound
-fn char_counter<T>(arg: T) -> usize {
+fn char_counter<T: std::convert::AsRef<str>>(arg: T) -> usize {
     arg.as_ref().chars().count()
 }
 
