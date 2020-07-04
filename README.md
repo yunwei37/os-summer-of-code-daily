@@ -1,5 +1,10 @@
 # Daily Schedule for OS Tutorial Summer of Code 2020
 
+- daily_documents：每日笔记
+- exercises：rust的一些小练习
+- practice：rust写的一些小程序
+- labs：rCore的lab
+
 ## TOC
 
 *七月*
