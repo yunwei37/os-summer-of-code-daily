@@ -199,7 +199,11 @@ Rust程序设计语言：
 
 尽量一个命令都不漏的详细记录，包含lab0和安装环境：
 
-[daily_documents/Day6_lab0.md][daily_documents/Day6_lab0.md]
+[daily_documents/Day6_lab0.md](daily_documents/Day6_lab0.md)
+
+lab0的代码可以参考：
+
+[lab0/README.md](lab0/README.md)
 
 ### 事件2：RISC-V：
 
@@ -229,3 +233,27 @@ Rust程序设计语言：
 
 [daily_documents/Day7_lab1.md](daily_documents/Day7_lab1.md)
 
+另外也阅读了一下lab2的实验教程，准备明天继续看看；
+
+lab1:
+
+[lab1/README.md](lab1/README.md)
+
+### 事件2：rust again
+
+把`rust程序设计语言`复习了一下（以及之前跳过的部分），顺带翻了翻 `rust by example`，以及 hard way，考虑了一下要写什么:
+
+明天开始写小习题；
+
+### 问题
+
+- 感觉之前看书可能有些略过并不是很仔细的地方，还需要再巩固一下；
+- lab的教程相对还是有一点简略（没有更新过的版本，似乎文档的改进工作正在进行中，可能还是结合实际代码阅读的效果会好一些；还有一些练习题的部分也不是很完善，不知道后续会不会被放进考核内容里面去；
+- （希望有空可以继续 xv6 的学习，能更深入地理解操作系统原理，也可相互对照；
+- 感觉自己表达的能力可能并不是很好...
+- lab我还是希望先阅读代码，在此基础上尝试做一些改进（可以自己尝试写一点模块，比如线段树，和最终代码相互对照？不过实验指导似乎还是教程性质的，并不是什么题目）；
+
+### 计划；
+
+- 整整 lab2；
+- 整整 rust的中长练习实践；
