@@ -219,3 +219,13 @@ Rust程序设计语言：
 - 做题家x
 - 把调试工具能不能弄得更顺手一点
 
+## Day 7 2020/7/7
+
+### 事件1：lab1
+
+这部分参考的是 27-labdoc 分支的内容，可能并不稳定；
+
+实验报告笔记：
+
+[daily_documents/Day7_lab1.md](daily_documents/Day7_lab1.md)
+
