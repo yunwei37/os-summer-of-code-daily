@@ -77,7 +77,8 @@
 
 编程：小练习题：
 
-[Small exercises to get you used to reading and writing Rust code!](exercises/rustlings/readme.md)
+[Small exercises to get you used to reading and writing Rust code!](part1-exercises-for-rust/rustlings/readme.md)
+
 
 - quiz 1-4
 - variables
@@ -262,4 +263,9 @@ lab1 :
 
 ## Day 8 2020/7/8
 
-### 事件1：
+### 事件1：lab2
+
+继续根据 42 - labdoc 分支（还未合并）的代码学习lab2：
+
+### 事件2：rust 练习
+
