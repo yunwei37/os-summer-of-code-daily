@@ -7,6 +7,8 @@
 这里放一下我的解答的地址：[https://github.com/yunwei37/os-summer-of-code-daily](https://github.com/yunwei37/os-summer-of-code-daily)
 
 
+这里使用的是当时的最新版本，并未切换至 tag 3.0.0
+
 第一天的这些部分都比较简单：
 
 - quiz 1-4：一般是对应于上一章节刚完成的内容

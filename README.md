@@ -133,7 +133,7 @@ Rust程序设计语言：
 
 练习：做完了rustlings的部分；
 
->[Small exercises to get you used to reading and writing Rust code!](exercises/rustlings/readme.md)
+>[Small exercises to get you used to reading and writing Rust code!](part1-exercises-for-rust/rustlings/readme.md)
 
 >★ All exercises completed! ★
 
@@ -207,7 +207,9 @@ lab0的代码可以参考：
 
 ### 事件2：RISC-V：
 
-尝试整理笔记；
+尝试整理了 RISC-V 的笔记；
+
+[daily_documents/Day5_riscv.md](daily_documents/Day5_riscv.md)
 
 顺手翻了翻这本书其他部分（真简短）
 
@@ -227,15 +229,15 @@ lab0的代码可以参考：
 
 ### 事件1：lab1
 
-这部分参考的是 27-labdoc 分支的内容，可能并不稳定；
+这部分参考的是 27-labdoc 分支的内容，可能并不稳定；（补充：第二天被合并到了主分支了
 
-实验报告笔记：
+实验报告笔记，以及添加的练习内容：
 
 [daily_documents/Day7_lab1.md](daily_documents/Day7_lab1.md)
 
 另外也阅读了一下lab2的实验教程，准备明天继续看看；
 
-lab1:
+lab1 :
 
 [lab1/README.md](lab1/README.md)
 
@@ -257,3 +259,7 @@ lab1:
 
 - 整整 lab2；
 - 整整 rust的中长练习实践；
+
+## Day 8 2020/7/8
+
+### 事件1：
