@@ -277,7 +277,7 @@ lab2实验指导笔记：
 
 ### 事件2：rust 练习
 
-尝试开始写了一小部分 rust 的 hardway 练习，主要是数据结构一类；
+尝试开始写了一小部分 rust 的 hardway 练习，完成了双向链表的建造；
 
 ### 问题
 
@@ -303,3 +303,14 @@ lab2实验指导笔记：
 
 [part1-exercises-for-rust\hardways\README.md](part1-exercises-for-rust/hardways/README.md)
 
+用 rust 完成 `笨办法学c语言` 中的排序算法，二叉树、堆栈等；
+
+## Day 10 2020/7/10
+
+### 事件1：rust 练习
+
+这两天在忙学校短学期的一点点事情...进展有点慢qwq
+
+感觉 `笨办法学c语言` 的简单题目似乎还不如去写leetcode；
+
+完成了数道 rust 的 leetcode 习题，附加代码使用c语言编写；应该明天就可以结束rust的小练习部分
