@@ -12,6 +12,7 @@
 - c33-sort: 练习33：链表算法
 - c40-bst: 练习40：二叉搜索树
 - c42-stack-queue: 练习42：栈和队列
+- c38-hashal：练习38：哈希算法
 
 ## Leecode题目用Rust实现
 
@@ -33,3 +34,5 @@
 - leetcode-remove-element - 27. 移除元素
 - leetcode-set-matrix-zeroes - 73. 矩阵置零
 - leetcode-valid-parentheses - 20. 有效的括号
+- leetcode-longest-consecutive-sequence - 128. 最长连续序列
+- leetcode-friend-circles - 547. 朋友圈

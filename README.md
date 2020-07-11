@@ -319,3 +319,16 @@ lab2实验指导笔记：
 
 ### 事件1：rust练习
 
+完成了15道 rust 练习题的部分：
+
+具体记录可参考：
+
+[part1-exercises-for-rust\hardways\README.md](part1-exercises-for-rust/hardways/README.md)
+
+如果之后有做其他的小练习，比如leetcode这样的，也会记录过来的啦
+
+### 在尝试完成lab2的过程中
+
+### 问题
+
+- 练习题做完15道之后确实对 rust 的理解更上一层楼了，也能尝试用rust实现一些算法，但是感觉还是挺浅薄的...可能还是需要一些工程上的练习
