@@ -1,0 +1,20 @@
+[package]
+name = "os"
+version = "0.1.0"
+authors = ["涂轶翔 <tyx17@mails.tsinghua.edu.cn>", "赵成钢 <zhaocg17@mails.tsinghua.edu.cn>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+algorithm = { path = 'src/algorithm' }
+buddy_system_allocator = "0.3.9"
+lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
+riscv = { git = "https://github.com/rcore-os/riscv", features = ["inline-asm"] }
+spin = "0.5.2"
+
+# panic 时直接终止，因为我们没有实现堆栈展开的功能
+[profile.dev]
+panic = "abort"
+[profile.release]
+panic = "abort"

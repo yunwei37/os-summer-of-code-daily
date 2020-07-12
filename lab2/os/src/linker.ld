@@ -1,4 +1,4 @@
-/* 有关 Linker Script 可以参考：https://sourceware.org/binutils/docs/ld/Scripts.html */
+/* Linker Script 语法可以参见：https://sourceware.org/binutils/docs/ld/Scripts.html */
 
 /* 目标架构 */
 OUTPUT_ARCH(riscv)
@@ -10,7 +10,7 @@ ENTRY(_start)
 BASE_ADDRESS = 0x80200000;
 
 SECTIONS
-{
+{   
     /* . 表示当前地址（location counter） */
     . = BASE_ADDRESS;
 

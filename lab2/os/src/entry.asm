@@ -4,13 +4,14 @@
 # 它将会执行一些必要操作，然后跳转至我们用 rust 编写的入口函数
 #
 # 关于 RISC-V 下的汇编语言，可以参考 https://github.com/riscv/riscv-asm-manual/blob/master/riscv-asm.md
+# %hi 表示取 [12,32) 位，%lo 表示取 [0,12) 位
 
     .section .text.entry
     .globl _start
 # 目前 _start 的功能：将预留的栈空间写入 $sp，然后跳转至 rust_main
 _start:
     la sp, boot_stack_top
-    call rust_main
+    jal rust_main
 
     # 回忆：bss 段是 ELF 文件中只记录长度，而全部初始化为 0 的一段内存空间
     # 这里声明字段 .bss.stack 作为操作系统启动时的栈
