@@ -3,7 +3,7 @@
 - daily_documents：每日笔记
 - part1-exercises-for-rust：rust的一些小练习
 - practice：rust写的一些小程序
-- labs：rCore的lab
+- labs：rCore的lab: 根据lab1~6的各个小节和代码，自己一步一步手写代码重现整个实现过程，并提交各个阶段的code成果
 
 ## TOC
 
@@ -351,8 +351,19 @@ lab2实验指导笔记：
 ## Day 14 2020/7/14
 
 - 今天也好忙qwq
-- 看完了tutorial剩下的几章，大致有个了解
+- 看完了tutorial剩下的几章，大致对整个实验有个初步的了解
 
 ## Day 15 2020/7/15
 
 - 今天也好忙qwq
+- 仔细研读了一下lab2的代码，和实验教程对应起来；
+
+## Day 16 2020/7/16
+
+- 今天也好颓qwq
+- 写了一部分 lab2 线段树的代码，参考 [https://github.com/mufeng964497595/seg_tree_memory_management](https://github.com/mufeng964497595/seg_tree_memory_management)
+
+## Day 17 2020/7/17
+
+- 笙笙啊笙笙 - 你不能这样qwq
+- 今天好颓，不想干活（前几天在写短学期的MC项目）
