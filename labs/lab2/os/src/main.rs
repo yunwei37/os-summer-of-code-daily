@@ -36,6 +36,8 @@ mod sbi;
 
 extern crate alloc;
 
+use riscv::register::time;
+
 // 汇编编写的程序入口，具体见该文件
 global_asm!(include_str!("entry.asm"));
 
@@ -64,8 +66,11 @@ pub extern "C" fn rust_main() {
     }
     println!("heap test passed");
 
+    let t = time::read();
+
     // 物理页分配
-    for _ in 0..2 {
+    let mut a = Vec::<crate::memory::frame::FrameTracker>::new();
+    for _ in 0..10000 {
         let frame_0 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
             Result::Ok(frame_tracker) => frame_tracker,
             Result::Err(err) => panic!("{}", err),
@@ -74,8 +79,12 @@ pub extern "C" fn rust_main() {
             Result::Ok(frame_tracker) => frame_tracker,
             Result::Err(err) => panic!("{}", err),
         };
-        println!("{} and {}", frame_0.address(), frame_1.address());
+        //println!("{} and {}", frame_0.address(), frame_1.address());
+        a.push(frame_0);
+        a.push(frame_1);
+        a.pop();
     }
-
+    println!("time: {}",time::read() - t);
+    //loop{ };
     panic!("end of rust_main");
 }

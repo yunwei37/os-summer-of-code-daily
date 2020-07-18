@@ -1,6 +1,7 @@
 //! 负责分配 / 回收的数据结构
 
 mod stacked_allocator;
+mod segment_tree_allocator;
 mod bitmap_vector_allocator;
 
 /// 分配器：固定容量，每次分配 / 回收一个元素
@@ -26,9 +27,12 @@ pub trait VectorAllocator {
 }
 
 pub use stacked_allocator::StackedAllocator;
+pub use segment_tree_allocator::SegmentTreeAllocator;
 pub use bitmap_vector_allocator::BitmapVectorAllocator;
 
 /// 默认使用的分配器
 pub type AllocatorImpl = StackedAllocator;
+
+//pub type AllocatorImpl = SegmentTreeAllocator;
 
 pub type VectorAllocatorImpl = BitmapVectorAllocator;

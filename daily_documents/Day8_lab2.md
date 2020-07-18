@@ -27,6 +27,31 @@ unsafe fn alloc(&self, layout: Layout) -> *mut u8;
 unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout);
 ```
 
+例如 memory/heap2.rs ：
+
+```rs
+
+/// 利用 VectorAllocator 的接口实现全局分配器的 GlobalAlloc trait
+unsafe impl alloc::alloc::GlobalAlloc for Heap {
+    unsafe fn alloc(&self, layout: core::alloc::Layout) -> *mut u8 {
+        let offset = (*self.0.get())
+            .as_mut()
+            .unwrap()
+            .alloc(layout.size(), layout.align())
+            .expect("Heap overflow");
+        &mut HEAP_SPACE[offset] as *mut u8
+    }
+    unsafe fn dealloc(&self, ptr: *mut u8, layout: core::alloc::Layout) {
+        let offset = ptr as usize - &HEAP_SPACE as *const _ as usize;
+        (*self.0.get())
+            .as_mut()
+            .unwrap()
+            .dealloc(offset, layout.size(), layout.align());
+    }
+}
+
+```
+
 Layout:
 
 - size 表示要分配的字节数;
@@ -61,6 +86,23 @@ Layout:
 动态分配的内存地址在哪个范围里？
 
 （上面源代码的注释中提及了在bss段中，是一个静态的没有初始化的数组，算是内核代码的一部分。
+
+这一部分是内核的堆分配，参考 memory/heap.rs:
+
+```rs
+#[global_allocator]
+static HEAP: LockedHeap = LockedHeap::empty();
+
+/// 初始化操作系统运行时堆空间
+pub fn init() {
+    // 告诉分配器使用这一段预留的空间作为堆
+    unsafe {
+        HEAP.lock()
+            .init(HEAP_SPACE.as_ptr() as usize, KERNEL_HEAP_SIZE);
+    }
+}
+
+```
 
 ## 物理内存探测
 
@@ -150,7 +192,7 @@ lazy_static! {
     ));
 }
 
-/// 基于线段树的帧分配 / 回收
+/// 帧分配 / 回收（取决于你用什么算法
 pub struct FrameAllocator<T: Allocator> {
     /// 可用区间的起始
     start_ppn: PhysicalPageNumber,
@@ -198,12 +240,13 @@ pub trait Allocator {
 }
 ```
 
+这一部分可以使用线段树，也可以不用；但似乎分配单个元素的时候线段树并没有多大意义；
+
 使用 spin::Mutex<T> 对于 static mut 类型加锁以避免冲突；
 
 把新写的模块加载进来，并在 main 函数中进行简单的测试：
 
 ```rs
-
     // 物理页分配
     for _ in 0..2 {
         let frame_0 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
@@ -237,7 +280,47 @@ pub trait Allocator {
 
 （正在查找资料尝试完成；
 
-4. 挑战实验（选做）
+在分配单个页面的时候线段树的意义也许并不是很大，因此代码内部这里还是采用了栈进行分配；
+
+- 栈时间复杂度可以达到 O(1) 空间复杂度 O(N)
+- 线段树在分配单个页面的时候时间复杂度 O(N)，空间复杂度 O(N) 而且常数更大；
+
+因此只有在分配多个连续页面的时候才是有意义的，而堆栈并不适用于这种场景；
+
+如果可以做出改进的话，应当可以考虑分配多个页面；
+
+这里先尝试实现了一个简单的分配单个页面的线段树算法（还可以优化；没有使用bitmap）；
+
+进行了一下简单的计时对比：分别进行 10000 次分配和删除；
+
+```rs
+    let t = time::read();
+
+    // 物理页分配
+    let mut a = Vec::<crate::memory::frame::FrameTracker>::new();
+    for _ in 0..10000 {
+        let frame_0 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
+            Result::Ok(frame_tracker) => frame_tracker,
+            Result::Err(err) => panic!("{}", err),
+        };
+        let frame_1 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
+            Result::Ok(frame_tracker) => frame_tracker,
+            Result::Err(err) => panic!("{}", err),
+        };
+        //println!("{} and {}", frame_0.address(), frame_1.address());
+        a.push(frame_0);
+        a.push(frame_1);
+        a.pop();
+    }
+    println!("time: {}",time::read() - t);
+```
+
+- SegmentTreeAllocator：time: 6322806
+- StackedAllocator：time: 829291
+
+同时也增加了部分测试代码：
+
+1. 挑战实验（选做）
 
 （正在查找资料尝试完成；
 
