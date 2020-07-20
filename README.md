@@ -5,6 +5,11 @@
 - practice：rust写的一些小程序
 - labs：rCore的lab: 根据lab1~6的各个小节和代码，自己一步一步手写代码重现整个实现过程，并提交各个阶段的code成果
 
+可供检查的具体实现目录：
+
+- [labs](labs/README.md)
+- [rust](part1-exercises-for-rust/README.md)
+
 ## TOC
 
 *七月*
