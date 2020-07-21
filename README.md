@@ -7,8 +7,8 @@
 
 可供检查的具体实现目录：
 
-- [rCore labs](labs/README.md)
-- [rust practices](part1-exercises-for-rust/README.md)
+- [rCore labs](labs)
+- [rust practices](part1-exercises-for-rust)
 
 ## TOC
 
@@ -19,7 +19,7 @@
 |                   |                   | 1 <br> ([D1](#day-1-202071)) | 2 <br> ([D2](#day-2-202072)) | 3 <br> ([D3](#day-3-202073)) | 4 <br> ([D4](#day-4-202074)) | 5 <br> ([D5](#day-5-202075)) |
 | 6 <br> ([D6](#day-6-202076)) | 7 <br> ([D7](#day-7-202077)) | 8 <br> ([D8](#day-8-202078))            | 9 <br> ([D9](#day-9-202079))            | 10 <br> ([D10](#day-10-2020710))         | 11  <br>  ([D11](#day-11-2020711))             | 12      <br>    ([D12](#day-12-2020712))       |
 | 13    <br>    ([D13](#day-13-2020713))             | 14         <br>    ([D14](#day-14-2020711))        | 15        <br>    ([D15](#day-15-2020715))                    | 16    <br>     ([D16](#day-16-2020716))                       | 17    <br>      ([D17](#day-17-2020717))                       | 18    <br>    ([D18](#day-18-2020718))            | 19   <br>     ([D19](#day-19-2020719))            |
-| 20   <br>    ([D20](#day-20-2020720))            | 21                | 22                           | 23                           | 24                           | 25                | 26                |
+| 20   <br>    ([D20](#day-20-2020720))            | 21       <br>    ([D21](#day-21-2020721)         | 22     <br>    ([D22](#day-22-2020722)                         | 23                           | 24                           | 25                | 26                |
 | 27                | 28                | 29                           | 30                           |                              |                   |                   |
 
 ------
@@ -451,13 +451,14 @@ lab2实验指导笔记：
 
 ### 事件3 - lab5 tutorial 学习笔记 & 代码整理
 
-
+完成了一部分；
 
 ### 遗留的一些问题
 
-- 对于简单的main函数进行fork不会出现问题，对于notebook程序可能会发生错误；（有可能是因为此时该线程被阻塞，在等待中断的过程中fork：
+- 对于简单的main函数进行fork不会出现问题，对于notebook程序可能会发生错误；（有可能是因为此时该线程被阻塞，在等待中断的过程中fork，这里复制的是内核线程：
 
 ```rs
+
 Thread {
     thread_id: 0x3,
     stack: Range {
@@ -471,6 +472,7 @@ Thread {
     context: None,
 } terminated: unimplemented interrupt type: Exception(InstructionPageFault)
 cause: Exception(InstructionPageFault), stval: 0
+
 ```
 
 - 调试工具掌握还不熟练（不过打log倒是挺熟的
