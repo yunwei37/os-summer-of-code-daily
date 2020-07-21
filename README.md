@@ -445,6 +445,32 @@ lab2实验指导笔记：
 
 ### 事件2 - lab4 实验题
 
-打算解决掉 lab5 再回过头来看实验题；
+<del>打算解决掉 lab5 再回过头来看实验题；</del>
+
+这里先做完了lab4的实验part1：
 
 ### 事件3 - lab5 tutorial 学习笔记 & 代码整理
+
+
+
+### 遗留的一些问题
+
+- 对于简单的main函数进行fork不会出现问题，对于notebook程序可能会发生错误；（有可能是因为此时该线程被阻塞，在等待中断的过程中fork：
+
+```rs
+Thread {
+    thread_id: 0x3,
+    stack: Range {
+        start: VirtualAddress(
+            0x1080000,
+        ),
+        end: VirtualAddress(
+            0x1100000,
+        ),
+    },
+    context: None,
+} terminated: unimplemented interrupt type: Exception(InstructionPageFault)
+cause: Exception(InstructionPageFault), stval: 0
+```
+
+- 调试工具掌握还不熟练（不过打log倒是挺熟的
