@@ -32,7 +32,6 @@ impl FrameTracker {
     }
 }
 
-
 /// `FrameTracker` 可以 deref 得到对应的 `[u8; PAGE_SIZE]`
 impl core::ops::Deref for FrameTracker {
     type Target = [u8; PAGE_SIZE];
@@ -47,7 +46,6 @@ impl core::ops::DerefMut for FrameTracker {
         self.page_number().deref_kernel()
     }
 }
-
 
 /// 帧在释放时会放回 [`static@FRAME_ALLOCATOR`] 的空闲链表中
 impl Drop for FrameTracker {

@@ -35,8 +35,8 @@
 mod console;
 mod interrupt;
 mod memory;
-mod process;
 mod panic;
+mod process;
 mod sbi;
 
 extern crate alloc;
@@ -60,17 +60,24 @@ pub extern "C" fn rust_main() -> ! {
 
         for message in 0..8 {
             let thread = Thread::new(
-                process.clone(),            // 使用同一个进程
-                sample_process as usize,    // 入口函数
-                Some(&[message]),           // 参数
-            ).unwrap();
+                process.clone(),         // 使用同一个进程
+                sample_process as usize, // 入口函数
+                Some(&[message]),        // 参数
+            )
+            .unwrap();
             // 设置线程的返回地址为 kernel_thread_exit
-            thread.as_ref().inner().context.as_mut().unwrap().set_ra(kernel_thread_exit as usize);
+            thread
+                .as_ref()
+                .context
+                .lock()
+                .as_mut()
+                .unwrap()
+                .set_ra(kernel_thread_exit as usize);
             PROCESSOR.get().add_thread(thread);
         }
     }
 
-    PROCESSOR.unsafe_get().run();
+    PROCESSOR.get().run();
 }
 
 fn sample_process(message: usize) {
@@ -84,7 +91,7 @@ fn sample_process(message: usize) {
 /// 内核线程需要调用这个函数来退出
 fn kernel_thread_exit() {
     // 当前线程标记为结束
-    PROCESSOR.get().current_thread().as_ref().inner().dead = true;
+    //PROCESSOR.get().current_thread().as_ref().dead = true;
     // 制造一个中断来交给操作系统处理
     unsafe { llvm_asm!("ebreak" :::: "volatile") };
 }

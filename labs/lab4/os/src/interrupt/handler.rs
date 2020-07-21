@@ -1,5 +1,8 @@
 use super::context::Context;
 use super::timer;
+use crate::memory::*;
+use crate::process::PROCESSOR;
+use alloc::{format, string::String};
 use riscv::register::{
     scause::{Exception, Interrupt, Scause, Trap},
     sie, stvec,
@@ -36,7 +39,7 @@ pub fn handle_interrupt(context: &mut Context, scause: Scause, stval: usize) -> 
         Trap::Exception(Exception::Breakpoint) => breakpoint(context),
         // 时钟中断
         Trap::Interrupt(Interrupt::SupervisorTimer) => supervisor_timer(context),
-        // 其他情况，终止当前线程
+        // 其他情况，无法处理
         _ => fault(context, scause, stval),
     }
 }
@@ -58,11 +61,12 @@ fn supervisor_timer(context: &mut Context) -> *mut Context {
 }
 
 /// 出现未能解决的异常
-fn fault(context: &mut Context, scause: Scause, stval: usize) {
+fn fault(context: &mut Context, scause: Scause, stval: usize) -> *mut Context {
     panic!(
         "Unresolved interrupt: {:?}\n{:x?}\nstval: {:x}",
         scause.cause(),
         context,
         stval
     );
+    context
 }

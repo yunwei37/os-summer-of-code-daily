@@ -68,10 +68,7 @@ impl MemorySet {
         for segment in segments.iter() {
             mapping.map(segment, None)?;
         }
-        Ok(MemorySet {
-            mapping,
-            segments,
-        })
+        Ok(MemorySet { mapping, segments })
     }
 
     /// 替换 `satp` 以激活页表

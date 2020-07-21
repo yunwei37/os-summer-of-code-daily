@@ -1,4 +1,3 @@
-
 use super::Allocator;
 use alloc::{vec, vec::Vec};
 
@@ -8,7 +7,7 @@ pub struct SegmentTreeAllocator {
 
 impl Allocator for SegmentTreeAllocator {
     fn new(capacity: usize) -> Self {
-        assert!(capacity >= 8,"capacity is too low");
+        assert!(capacity >= 8, "capacity is too low");
         let leaf_count = capacity.next_power_of_two();
         let mut tree = vec![false; 2 * leaf_count];
         for i in capacity..leaf_count {
@@ -52,11 +51,11 @@ impl Allocator for SegmentTreeAllocator {
 
 impl SegmentTreeAllocator {
     fn update_node(&mut self, mut index: usize, value: bool) {
-        self.tree[index]= value;
+        self.tree[index] = value;
         while index > 1 {
             index /= 2;
             let v = self.tree[index * 2] && self.tree[index * 2 + 1];
-            self.tree[index]= v;
+            self.tree[index] = v;
         }
     }
 }
