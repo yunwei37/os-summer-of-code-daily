@@ -476,3 +476,8 @@ cause: Exception(InstructionPageFault), stval: 0
 ```
 
 - 调试工具掌握还不熟练（不过打log倒是挺熟的
+
+## Day 22 2020/7/22
+
+### 事件1 - lab5 tutorial 学习笔记 & 代码整理
+
