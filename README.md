@@ -479,6 +479,19 @@ cause: Exception(InstructionPageFault), stval: 0
 
 ## Day 22 2020/7/22
 
-### 事件1 - lab5 tutorial 学习笔记 & 代码整理
+### 事件1 - lab tutorial 学习笔记 & 代码整理
 
-完成了 lab5 的笔记和代码整理
+完成了 lab5 的笔记和代码整理;
+
+[daily_documents\Day21_lab5.md](daily_documents/Day21_lab5.md)
+
+基本完成了 lab6 的笔记和代码整理;
+
+[daily_documents\Day22_lab6.md](daily_documents/Day22_lab6.md)
+
+### 总结
+
+- 感觉 lab4-6 和前期相比省略的内容还是比较多，可能还是有不少不完善的地方吧...
+- 对于整个 lab 实验的代码和实现基本过了一遍，接下来打算做完实验题看看有没有什么自己想改进的地方；
+- 感觉了解的操作系统具体实现还是比较少，可以先看看其他的书和rcore的实现；
+- 还有一些细节问题和思考不全面的地方需要回头再整理清楚一下；

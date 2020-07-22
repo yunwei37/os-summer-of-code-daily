@@ -15,6 +15,8 @@ lab 完成的情况记录/目录
   - lab2：[daily_documents/Day8_lab2.md](../daily_documents/Day8_lab2.md)
   - lab3：[daily_documents/Day17_lab3.md](../daily_documents/Day17_lab3.md)
   - lab4：[daily_documents/Day19_lab4.md](../daily_documents/Day19_lab4.md)
+  - lab5：[daily_documents/Day21_lab5.md](../daily_documents/Day21_lab5.md)
+  - lab6：[daily_documents/Day22_lab6.md](../daily_documents/Day22_lab6.md)
 
 
 ## 完成实验题一~六
@@ -31,3 +33,10 @@ lab 完成的情况记录/目录
   - lab2：[daily_documents\Day15_lab2_practice.md](../daily_documents/Day15_lab2_practice.md)
   - lab3：[daily_documents\Day18_lab3_practice.md](../daily_documents/Day18_lab3_practice.md)
   - lab4：[daily_documents\Day21_lab4_practice.md](../daily_documents/Day21_lab4_practice.md)
+
+## 也许可以做的改进：
+
+- 可以尝试一些其他文件系统；
+- 线程/进程部分的实现感觉有点小粗糙；
+- 看看能不能增加一些系统调用；
+- 网卡；
