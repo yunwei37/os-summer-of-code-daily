@@ -5,11 +5,11 @@
 extern crate user_lib;
 
 #[no_mangle]
-pub fn main() -> usize {
-    println!("Hello world from user mode program!");
+pub fn main(num:i32) -> usize {
+    //println!("Hello world from user mode program!");
     for i in 0..10000000{
         if i%1000000 == 0 {
-            println!("Hello world from user mode program!{}",i);
+            println!("Hello world from user mode {} program!{}",num,i);
         }
     }
     0

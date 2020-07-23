@@ -3,7 +3,7 @@
 - daily_documents：每日笔记
 - part1-exercises-for-rust：rust的一些小练习
 - practice：rust写的一些小程序
-- labs：rCore的lab: 根据lab1~6的各个小节和代码，自己一步一步手写代码重现整个实现过程，并提交各个阶段的code成果
+- labs：rCore的lab
 
 可供检查的具体实现目录：
 
@@ -495,3 +495,9 @@ cause: Exception(InstructionPageFault), stval: 0
 - 对于整个 lab 实验的代码和实现基本过了一遍，接下来打算做完实验题看看有没有什么自己想改进的地方；
 - 感觉了解的操作系统具体实现还是比较少，可以先看看其他的书和rcore的实现；
 - 还有一些细节问题和思考不全面的地方需要回头再整理清楚一下；
+
+## Day 23 2020/7/23
+
+### 事件1 - lab4 实验题
+
+lab4 实验题 part2 部分

@@ -223,11 +223,95 @@ make[1]: Leaving directory '/home/yunwei/rCore-Tutorial-lab-4/os'
 
 # 实验四（下）：线程调度
 
-
-
 1. 实验：了解并实现 Stride Scheduling 调度算法，为不同线程设置不同优先级，使得其获得与优先级成正比的运行时间。
+
+os/src/algorithm/src/scheduler/stride_scheduler.rs
+
+```rs
+
+//! 最高响应比优先算法的调度器 [`HrrnScheduler`]
+
+use super::Scheduler;
+use alloc::collections::LinkedList;
+
+/// 将线程和调度信息打包
+struct StrideThread<ThreadType: Clone + Eq> {
+    /// ticket
+    ticket: usize,
+    /// stride
+    pass: usize,
+    /// 线程数据
+    pub thread: ThreadType,
+}
+
+/// 采用 HRRN（最高响应比优先算法）的调度器
+pub struct StrideScheduler<ThreadType: Clone + Eq> {
+    /// max stride
+    BIG_STRIDE:usize,
+    /// 带有调度信息的线程池
+    pool: LinkedList<StrideThread<ThreadType>>,
+}
+
+/// `Default` 创建一个空的调度器
+impl<ThreadType: Clone + Eq> Default for StrideScheduler<ThreadType> {
+    fn default() -> Self {
+        Self {
+            BIG_STRIDE: 2760,
+            pool: LinkedList::new(),
+        }
+    }
+}
+
+impl<ThreadType: Clone + Eq> Scheduler<ThreadType> for StrideScheduler<ThreadType> {
+
+    fn add_thread(&mut self, thread: ThreadType, _priority: usize) {
+        self.pool.push_back(StrideThread {
+            ticket: _priority,
+            pass: 0,
+            thread,
+        })
+    }
+
+    fn get_next(&mut self) -> Option<ThreadType> {
+        // 计时
+
+        if let Some(best) = self.pool.iter_mut().min_by(|x, y| {
+            (x.pass)
+                .cmp(&(y.pass))
+        }) {
+            if best.ticket == 0 {
+                best.pass += self.BIG_STRIDE;
+            }else{
+                best.pass += self.BIG_STRIDE / best.ticket;
+            }
+            Some(best.thread.clone())
+        } else {
+            None
+        }
+    }
+
+    fn remove_thread(&mut self, thread: &ThreadType) {
+        // 移除相应的线程并且确认恰移除一个线程
+        let mut removed = self.pool.drain_filter(|t| t.thread == *thread);
+        assert!(removed.next().is_some() && removed.next().is_none());
+    }
+
+    fn set_priority(&mut self, _thread: ThreadType, _priority: usize) {
+        for x in self.pool.iter_mut(){
+            if x.thread == _thread {
+                x.ticket = _priority as usize;
+            }
+        }
+    }
+}
+
+```
+
+似乎向用户程序参数传递并没有成功？
 
 2. 分析：
     - 在 Stride Scheduling 算法下，如果一个线程进入了一段时间的等待（例如等待输入，此时它不会被运行），会发生什么？
+      - 如果在这种简单的实现下，有可能会出现其他线程等待该线程的情况；
     - 对于两个优先级分别为 9 和 1 的线程，连续 10 个时间片中，前者的运行次数一定更多吗？
+     - 并不一定。
     - 你认为 Stride Scheduling 算法有什么不合理之处？可以怎样改进？

@@ -108,11 +108,11 @@ impl Processor {
     }
 
     /// 添加一个待执行的线程
-    pub fn add_thread(&mut self, thread: Arc<Thread>) {
+    pub fn add_thread(&mut self, thread: Arc<Thread>, priority:usize) {
         if self.current_thread.is_none() {
             self.current_thread = Some(thread.clone());
         }
-        self.scheduler.add_thread(thread, 0);
+        self.scheduler.add_thread(thread, priority);
     }
 
     /// 唤醒一个休眠线程
@@ -151,6 +151,6 @@ impl Processor {
         println!("1:{:#x?}",self.current_thread());
         let thread = self.current_thread().fork(*context).unwrap();
         println!("2:{:#x?}",thread);
-        self.add_thread(thread);
+        self.add_thread(thread,0);
     }
 }

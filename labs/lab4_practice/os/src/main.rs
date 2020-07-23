@@ -67,23 +67,29 @@ pub extern "C" fn rust_main(_hart_id: usize, dtb_pa: PhysicalAddress) -> ! {
     drivers::init(dtb_pa);
     fs::init();
 
-    start_kernel_thread(test_kernel_thread as usize, Some(&[0usize]));
-    //start_user_thread("notebook");
-    start_user_thread("hello_world");
+    //start_kernel_thread(test_kernel_thread as usize, Some(&[0usize]), 1);
+    start_user_thread("hello_world",1);
+    start_user_thread("hello_world",2);
+    start_user_thread("hello_world",4);
+    start_user_thread("hello_world",8);
     PROCESSOR.get().run()
 }
 
 fn test_kernel_thread(id: usize) {
-    println!("hello from kernel thread {}", id);
+    for i in 0..10000000{
+        if i%1000000 == 0 {
+            println!("Hello world from kernel mode {} program!{}",id,i);
+        }
+    }
 }
 
-fn start_kernel_thread(entry_point: usize, arguments: Option<&[usize]>) {
+fn start_kernel_thread(entry_point: usize, arguments: Option<&[usize]>,priority:usize) {
     let process = Process::new_kernel().unwrap();
     let thread = Thread::new(process, entry_point, arguments).unwrap();
-    PROCESSOR.get().add_thread(thread);
+    PROCESSOR.get().add_thread(thread,priority);
 }
 
-fn start_user_thread(name: &str) {
+fn start_user_thread(name: &str,priority:usize) {
     // 从文件系统中找到程序
     let app = fs::ROOT_INODE.find(name).unwrap();
     // 读取数据
@@ -93,7 +99,7 @@ fn start_user_thread(name: &str) {
     // 利用 ELF 文件创建线程，映射空间并加载数据
     let process = Process::from_elf(&elf, true).unwrap();
     // 再从 ELF 中读出程序入口地址
-    let thread = Thread::new(process, elf.header.pt2.entry_point() as usize, None).unwrap();
+    let thread = Thread::new(process, elf.header.pt2.entry_point() as usize, Some(&[priority])).unwrap();
     // 添加线程
-    PROCESSOR.get().add_thread(thread);
+    PROCESSOR.get().add_thread(thread,priority);
 }
