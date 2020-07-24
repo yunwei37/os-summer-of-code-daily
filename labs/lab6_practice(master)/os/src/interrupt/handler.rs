@@ -92,8 +92,7 @@ fn supervisor_external(context: &mut Context) -> *mut Context {
         if c == 3 {
             PROCESSOR.lock().kill_current_thread();
             PROCESSOR.lock().prepare_next_thread();
-        }
-        else{
+        } else {
             if c == '\r' as usize {
                 c = '\n' as usize;
             }

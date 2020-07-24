@@ -5,6 +5,7 @@ pub const STDOUT: usize = 1;
 
 const SYSCALL_READ: usize = 63;
 const SYSCALL_WRITE: usize = 64;
+const SYSCALL_OPEN: usize = 65;
 const SYSCALL_EXIT: usize = 93;
 const SYSCALL_GETTID: usize = 94;
 const SYSCALL_CLONE: usize = 95;
@@ -60,4 +61,13 @@ pub fn sys_get_tid() -> isize {
 
 pub fn sys_clone() -> isize {
     syscall(SYSCALL_CLONE, 0, 0, 0)
+}
+
+pub fn sys_open(name: &str) -> isize {
+    syscall(
+        SYSCALL_OPEN,
+        0,
+        name.as_ptr() as *const u8 as usize,
+        name.len(),
+    )
 }

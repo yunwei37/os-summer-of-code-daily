@@ -61,7 +61,7 @@ impl Thread {
         process: Arc<Process>,
         entry_point: usize,
         arguments: Option<&[usize]>,
-        priority: usize
+        priority: usize,
     ) -> MemoryResult<Arc<Thread>> {
         // 让所属进程分配并映射一段空间，作为线程的栈
         let stack = process.alloc_page_range(STACK_SIZE, Flags::READABLE | Flags::WRITABLE)?;
@@ -81,7 +81,7 @@ impl Thread {
                 context: Some(context),
                 sleeping: false,
                 dead: false,
-                priority
+                priority,
             }),
         });
 
@@ -89,21 +89,25 @@ impl Thread {
     }
 
     pub fn fork(&self, current_context: Context) -> MemoryResult<Arc<Thread>> {
-
         println!("enter fork");
 
         // 让所属进程分配并映射一段空间，作为线程的栈
-        let stack = self.process.alloc_page_range(STACK_SIZE, Flags::READABLE | Flags::WRITABLE)?;
+        let stack = self
+            .process
+            .alloc_page_range(STACK_SIZE, Flags::READABLE | Flags::WRITABLE)?;
 
         for i in 0..STACK_SIZE {
-            *VirtualAddress(stack.start.0 + i).deref::<u8>() = *VirtualAddress(self.stack.start.0 + i).deref::<u8>()
+            *VirtualAddress(stack.start.0 + i).deref::<u8>() =
+                *VirtualAddress(self.stack.start.0 + i).deref::<u8>()
         }
-        
+
         println!("2");
 
         let mut context = current_context.clone();
 
-        context.set_sp( usize::from(stack.start) -  usize::from(self.stack.start) + current_context.sp()  );
+        context.set_sp(
+            usize::from(stack.start) - usize::from(self.stack.start) + current_context.sp(),
+        );
 
         // 打包成线程
         let thread = Arc::new(Thread {
@@ -117,7 +121,7 @@ impl Thread {
                 context: Some(context),
                 sleeping: false,
                 dead: false,
-                priority: self.inner().priority
+                priority: self.inner().priority,
             }),
         });
 

@@ -189,7 +189,95 @@ build: dependency
 
 ```
 
+os/src/kernel/fs.rs
+
+```rs
+
+pub(super) fn sys_open(buffer: *mut u8, size: usize) -> SyscallResult {
+    let name = unsafe {
+        let slice = slice::from_raw_parts(buffer, size);
+        str::from_utf8(slice).unwrap()
+    };
+    // 从文件系统中找到程序
+    let file = ROOT_INODE.find(name).unwrap();
+    let process = PROCESSOR.lock().current_thread().process.clone();
+    process.inner().descriptors.push(file);
+    SyscallResult::Proceed(
+        (PROCESSOR
+            .lock()
+            .current_thread()
+            .process
+            .clone()
+            .inner()
+            .descriptors
+            .len()
+            - 1) as isize,
+    )
+}
+
+```
+
+user/src/syscall.rs
+
+```rs
+pub fn sys_open(name: &str) -> isize {
+    syscall(
+        SYSCALL_OPEN,
+        0,
+        name.as_ptr() as *const u8 as usize,
+        name.len(),
+    )
+}
 
 
+```
+
+测试程序：
+
+```rs
+#![no_std]
+#![no_main]
+
+#[macro_use]
+extern crate user_lib;
+
+use user_lib::alloc::string::String;
+use user_lib::syscall::*;
+
+#[no_mangle]
+pub fn main() -> usize {
+    println!("Hello world from user mode program!");
+    println!("tid: {}", sys_get_tid());
+    let fd = sys_open("hello_world.rs");
+    println!("fd: {}", fd);
+    let mut buffer = [0u8; 1024];
+    let size = sys_read(fd as usize, &mut buffer);
+    if let Ok(string) = String::from_utf8(buffer.iter().copied().take(size as usize).collect()) {
+        print!("{}", string);
+    }
+    0
+}
+
+
+```
+
+输出：
+
+
+```
+Hello world from user mode program!
+tid: 1
+fd: 2
+#[no_mangle]
+pub fn main() -> usize {
+    println!("Hello world from user mode program!");
+    println!("tid: {}",sys_get_tid());
+    println!("clone: {}",sys_clone());
+    println!("tid: {}",sys_get_tid());
+    0
+}
+thread 1 exit with code 0
+
+```
 
 6. 挑战实验：实现 sys_pipe，返回两个文件描述符，分别为一个管道的读和写端。用户线程调用完 sys_pipe 后调用 sys_fork，父线程写入管道，子线程可以读取。读取时尽量避免忙等待。

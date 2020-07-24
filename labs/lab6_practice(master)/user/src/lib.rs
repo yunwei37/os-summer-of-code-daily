@@ -15,7 +15,7 @@ pub mod syscall;
 #[macro_use]
 pub mod console;
 
-extern crate alloc;
+pub extern crate alloc;
 
 pub use crate::syscall::*;
 use buddy_system_allocator::LockedHeap;

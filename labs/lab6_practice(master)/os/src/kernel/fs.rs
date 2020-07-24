@@ -1,7 +1,10 @@
 //! 文件相关的内核功能
 
 use super::*;
+use crate::fs::ROOT_INODE;
+use core::slice;
 use core::slice::from_raw_parts_mut;
+use core::str;
 
 /// 从指定的文件中读取字符
 ///
@@ -42,4 +45,26 @@ pub(super) fn sys_write(fd: usize, buffer: *mut u8, size: usize) -> SyscallResul
         }
     }
     SyscallResult::Proceed(-1)
+}
+
+pub(super) fn sys_open(buffer: *mut u8, size: usize) -> SyscallResult {
+    let name = unsafe {
+        let slice = slice::from_raw_parts(buffer, size);
+        str::from_utf8(slice).unwrap()
+    };
+    // 从文件系统中找到程序
+    let file = ROOT_INODE.find(name).unwrap();
+    let process = PROCESSOR.lock().current_thread().process.clone();
+    process.inner().descriptors.push(file);
+    SyscallResult::Proceed(
+        (PROCESSOR
+            .lock()
+            .current_thread()
+            .process
+            .clone()
+            .inner()
+            .descriptors
+            .len()
+            - 1) as isize,
+    )
 }

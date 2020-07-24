@@ -4,6 +4,8 @@ use super::*;
 
 pub const SYS_READ: usize = 63;
 pub const SYS_WRITE: usize = 64;
+pub const SYS_OPEN: usize = 65;
+pub const SYS_CLOSE: usize = 65;
 pub const SYS_EXIT: usize = 93;
 pub const SYS_GETTID: usize = 94;
 pub const SYS_CLONE: usize = 95;
@@ -32,6 +34,7 @@ pub fn syscall_handler(context: &mut Context) -> *mut Context {
         SYS_EXIT => sys_exit(args[0]),
         SYS_GETTID => sys_get_tid(),
         SYS_CLONE => sys_clone(context),
+        SYS_OPEN => sys_open(args[1] as *mut u8, args[2]),
         _ => {
             println!("unimplemented syscall: {}", syscall_id);
             SyscallResult::Kill

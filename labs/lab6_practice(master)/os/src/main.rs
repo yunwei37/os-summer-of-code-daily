@@ -102,9 +102,9 @@ pub extern "C" fn rust_main(_hart_id: usize, dtb_pa: PhysicalAddress) -> ! {
 }
 
 fn sample_process(id: usize) {
-    for i in 0..4000000{
-        if i%1000000 == 0 {
-            println!("Hello world from kernel mode {} program!{}",id,i);
+    for i in 0..4000000 {
+        if i % 1000000 == 0 {
+            println!("Hello world from kernel mode {} program!{}", id, i);
         }
     }
 }

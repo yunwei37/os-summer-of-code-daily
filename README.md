@@ -504,5 +504,12 @@ cause: Exception(InstructionPageFault), stval: 0
 
 [daily_documents\Day21_lab4_practice.md](daily_documents/Day21_lab4_practice.md)
 
-### 事件2 - lab6 实验题
+## Day 24 2020/7/24
 
+### 事件1 - lab6 实验题
+
+完成了 lab6 的实验题：
+
+[daily_documents\Day23_lab6_practice.md](daily_documents/Day23_lab6_practice.md)
+
+### 事件2 - 总结、提交部分

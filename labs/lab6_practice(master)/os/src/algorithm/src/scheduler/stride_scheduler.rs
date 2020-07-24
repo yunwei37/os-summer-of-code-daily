@@ -16,8 +16,8 @@ struct StrideThread<ThreadType: Clone + Eq> {
 /// 采用 HRRN（最高响应比优先算法）的调度器
 pub struct StrideScheduler<ThreadType: Clone + Eq> {
     /// max stride
-    big_stride:usize,
-    current_min:usize,
+    big_stride: usize,
+    current_min: usize,
     /// 带有调度信息的线程池
     pool: LinkedList<StrideThread<ThreadType>>,
 }
@@ -34,26 +34,22 @@ impl<ThreadType: Clone + Eq> Default for StrideScheduler<ThreadType> {
 }
 
 impl<ThreadType: Clone + Eq> Scheduler<ThreadType> for StrideScheduler<ThreadType> {
-
     fn add_thread(&mut self, thread: ThreadType, _priority: usize) {
-            self.pool.push_back(StrideThread {
-                ticket: _priority,
-                pass: self.current_min,
-                thread,
-            })
+        self.pool.push_back(StrideThread {
+            ticket: _priority,
+            pass: self.current_min,
+            thread,
+        })
     }
 
     fn get_next(&mut self) -> Option<ThreadType> {
         // 计时
 
-        if let Some(best) = self.pool.iter_mut().min_by(|x, y| {
-            (x.pass)
-                .cmp(&(y.pass))
-        }) {
+        if let Some(best) = self.pool.iter_mut().min_by(|x, y| (x.pass).cmp(&(y.pass))) {
             if best.ticket == 0 {
                 best.pass += self.big_stride;
-            }else{
-                best.pass += self.big_stride / ( best.ticket + 1 );
+            } else {
+                best.pass += self.big_stride / (best.ticket + 1);
             }
             self.current_min = best.pass;
             Some(best.thread.clone())
@@ -69,7 +65,7 @@ impl<ThreadType: Clone + Eq> Scheduler<ThreadType> for StrideScheduler<ThreadTyp
     }
 
     fn set_priority(&mut self, _thread: ThreadType, _priority: usize) {
-        for x in self.pool.iter_mut(){
+        for x in self.pool.iter_mut() {
             if x.thread == _thread {
                 x.ticket = _priority as usize;
             }

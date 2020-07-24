@@ -96,14 +96,16 @@ impl Processor {
 
     /// 添加一个待执行的线程
     pub fn add_thread(&mut self, thread: Arc<Thread>) {
-        self.scheduler.add_thread(thread.clone(), thread.inner().priority);
+        self.scheduler
+            .add_thread(thread.clone(), thread.inner().priority);
     }
 
     /// 唤醒一个休眠线程
     pub fn wake_thread(&mut self, thread: Arc<Thread>) {
         thread.inner().sleeping = false;
         self.sleeping_threads.remove(&thread);
-        self.scheduler.add_thread(thread.clone(), thread.inner().priority);
+        self.scheduler
+            .add_thread(thread.clone(), thread.inner().priority);
     }
 
     /// 保存当前线程的 `Context`
@@ -131,7 +133,7 @@ impl Processor {
 
     /// 线程的 fork()
     /// fork 后应当为目前的线程复制一份几乎一样的拷贝，新线程与旧线程同属一个进程，公用页表和大部分内存空间，而新线程的栈是一份拷贝。
-    pub fn fork_current_thread(&mut self, context: &Context){
+    pub fn fork_current_thread(&mut self, context: &Context) {
         //println!("1:{:#x?}",self.current_thread());
         let thread = self.current_thread().fork(*context).unwrap();
         //println!("2:{:#x?}",thread);

@@ -20,7 +20,7 @@ pub(super) fn sys_clone(context: &Context) -> SyscallResult {
     PROCESSOR.lock().fork_current_thread(context);
     if PROCESSOR.lock().current_thread().id.clone() == id {
         SyscallResult::Proceed(id)
-    }else{
+    } else {
         SyscallResult::Proceed(0)
     }
 }
