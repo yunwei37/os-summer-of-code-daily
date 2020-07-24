@@ -500,4 +500,9 @@ cause: Exception(InstructionPageFault), stval: 0
 
 ### 事件1 - lab4 实验题
 
-lab4 实验题 part2 部分
+完成了 lab4 实验题 part2 部分
+
+[daily_documents\Day21_lab4_practice.md](daily_documents/Day21_lab4_practice.md)
+
+### 事件2 - lab6 实验题
+

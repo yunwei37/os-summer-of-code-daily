@@ -247,7 +247,8 @@ struct StrideThread<ThreadType: Clone + Eq> {
 /// 采用 HRRN（最高响应比优先算法）的调度器
 pub struct StrideScheduler<ThreadType: Clone + Eq> {
     /// max stride
-    BIG_STRIDE:usize,
+    big_stride:usize,
+    current_min:usize,
     /// 带有调度信息的线程池
     pool: LinkedList<StrideThread<ThreadType>>,
 }
@@ -256,7 +257,8 @@ pub struct StrideScheduler<ThreadType: Clone + Eq> {
 impl<ThreadType: Clone + Eq> Default for StrideScheduler<ThreadType> {
     fn default() -> Self {
         Self {
-            BIG_STRIDE: 2760,
+            big_stride: 137,
+            current_min: 0,
             pool: LinkedList::new(),
         }
     }
@@ -265,11 +267,11 @@ impl<ThreadType: Clone + Eq> Default for StrideScheduler<ThreadType> {
 impl<ThreadType: Clone + Eq> Scheduler<ThreadType> for StrideScheduler<ThreadType> {
 
     fn add_thread(&mut self, thread: ThreadType, _priority: usize) {
-        self.pool.push_back(StrideThread {
-            ticket: _priority,
-            pass: 0,
-            thread,
-        })
+            self.pool.push_back(StrideThread {
+                ticket: _priority,
+                pass: self.current_min,
+                thread,
+            })
     }
 
     fn get_next(&mut self) -> Option<ThreadType> {
@@ -280,10 +282,11 @@ impl<ThreadType: Clone + Eq> Scheduler<ThreadType> for StrideScheduler<ThreadTyp
                 .cmp(&(y.pass))
         }) {
             if best.ticket == 0 {
-                best.pass += self.BIG_STRIDE;
+                best.pass += self.big_stride;
             }else{
-                best.pass += self.BIG_STRIDE / best.ticket;
+                best.pass += self.big_stride / ( best.ticket + 1 );
             }
+            self.current_min = best.pass;
             Some(best.thread.clone())
         } else {
             None
@@ -307,11 +310,89 @@ impl<ThreadType: Clone + Eq> Scheduler<ThreadType> for StrideScheduler<ThreadTyp
 
 ```
 
-似乎向用户程序参数传递并没有成功？
+修改一下 thread 的定义：
+
+```rs
+/// 线程中需要可变的部分
+pub struct ThreadInner {
+    /// 线程执行上下文
+    ///
+    /// 当且仅当线程被暂停执行时，`context` 为 `Some`
+    pub context: Option<Context>,
+    /// 是否进入休眠
+    pub sleeping: bool,
+    /// 是否已经结束
+    pub dead: bool,
+    /// priority
+    pub priority: usize,
+}
+```
+
+测试代码：
+
+```rs
+fn sample_process(id: usize) {
+    for i in 0..4000000{
+        if i%1000000 == 0 {
+            println!("Hello world from kernel mode {} program!{}",id,i);
+        }
+    }
+}
+```
+
+结果：
+
+```
+
+Hello world from kernel mode 2 program!0
+Hello world from kernel mode 3 program!0
+Hello world from kernel mode 4 program!0
+Hello world from kernel mode 5 program!0
+Hello world from kernel mode 6 program!0
+Hello world from kernel mode 7 program!0
+Hello world from kernel mode 8 program!0
+Hello world from user mode program!
+thread 9 exit with code 0
+Hello world from kernel mode 1 program!0
+Hello world from kernel mode 8 program!1000000
+Hello world from kernel mode 7 program!1000000
+Hello world from kernel mode 6 program!1000000
+Hello world from kernel mode 5 program!1000000
+Hello world from kernel mode 4 program!1000000
+Hello world from kernel mode 8 program!2000000
+Hello world from kernel mode 3 program!1000000
+Hello world from kernel mode 7 program!2000000
+Hello world from kernel mode 6 program!2000000
+Hello world from kernel mode 2 program!1000000
+Hello world from kernel mode 5 program!2000000
+Hello world from kernel mode 8 program!3000000
+Hello world from kernel mode 7 program!3000000
+Hello world from kernel mode 4 program!2000000
+Hello world from kernel mode 6 program!3000000
+thread 8 exit
+Hello world from kernel mode 5 program!3000000
+Hello world from kernel mode 3 program!2000000
+thread 7 exit
+Hello world from kernel mode 1 program!1000000
+thread 6 exit
+Hello world from kernel mode 4 program!3000000
+thread 5 exit
+Hello world from kernel mode 2 program!2000000
+Hello world from kernel mode 3 program!3000000
+thread 4 exit
+Hello world from kernel mode 2 program!3000000
+thread 3 exit
+Hello world from kernel mode 1 program!2000000
+thread 2 exit
+Hello world from kernel mode 1 program!3000000
+thread 1 exit
+```
 
 2. 分析：
     - 在 Stride Scheduling 算法下，如果一个线程进入了一段时间的等待（例如等待输入，此时它不会被运行），会发生什么？
-      - 如果在这种简单的实现下，有可能会出现其他线程等待该线程的情况；
+      - 如果在这种简单的实现下，有可能会出现其他线程等待该线程的情况；比如一个要获取输入的进程的优先级较高，要等它的 pass 经过多个时间片比其他的线程大的时候其他线程才会被调度。
     - 对于两个优先级分别为 9 和 1 的线程，连续 10 个时间片中，前者的运行次数一定更多吗？
-     - 并不一定。
+     - 并不一定，因为有可能9的线程运行了一下就结束了。
     - 你认为 Stride Scheduling 算法有什么不合理之处？可以怎样改进？
+      - 可能会出现等待进程的情况；
+      - 也要注意，新加进去的进程的pass不能是0，否则会一直霸占着时间片；

@@ -32,7 +32,7 @@ lab 完成的情况记录/目录
   - lab1：[daily_documents\Day8_lab1_practice.md](../daily_documents/Day8_lab1_practice.md)
   - lab2：[daily_documents\Day15_lab2_practice.md](../daily_documents/Day15_lab2_practice.md)
   - lab3：[daily_documents\Day18_lab3_practice.md](../daily_documents/Day18_lab3_practice.md)
-  - lab4：[daily_documents\Day21_lab4_practice.md](../daily_documents/Day21_lab4_practice.md)
+  - lab4（包含上下两部分）：[daily_documents\Day21_lab4_practice.md](../daily_documents/Day21_lab4_practice.md)
 
 ## 也许可以做的改进：
 
