@@ -99,6 +99,9 @@ fn test_page_fault() {
     for i in 0..array.len() {
         assert_eq!(i, array[i]);
     }
+    assert_eq!(1024, array[1024]);
+    assert_eq!(1, array[1]);
+    assert_eq!(10000, array[10000]);
     println!("\x1b[32mtest passed\x1b[0m");
 }
 

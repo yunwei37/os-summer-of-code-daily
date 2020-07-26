@@ -536,4 +536,8 @@ cause: Exception(InstructionPageFault), stval: 0
 
 ### 事件1：lab3 实现时钟页面置换算法
 
-看起来实验框架终于整理好了，把这个剩下的也完成一下）
+看起来实验框架终于整理好了，把这个剩下的也完成一下；
+
+参考这里：
+
+[daily_documents\Day18_lab3_practice.md](daily_documents/Day18_lab3_practice.md)

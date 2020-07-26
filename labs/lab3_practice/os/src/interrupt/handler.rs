@@ -114,6 +114,9 @@ fn supervisor_timer(context: &mut Context) -> *mut Context {
 fn supervisor_external(context: &mut Context) -> *mut Context {
     let mut c = console_getchar();
     if c <= 255 {
+        if c == 3 {
+            panic!("end");
+        }
         if c == '\r' as usize {
             c = '\n' as usize;
         }
