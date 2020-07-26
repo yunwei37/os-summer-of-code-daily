@@ -30,7 +30,9 @@ lab 完成的情况记录/目录
 其中，实验1和实验2包含在 lab1 和 lab2目录中，在手写代码基础上结合实验框架完成；
 其他实验代码：
 
+- lab3：lab3_practice 文件夹
 - lab4: lab4_practice 文件夹
+- lab6：lab6_practice(master) 文件夹
 
 - 实验报告包含在 daily_documents 文件夹中；
   - lab1：[daily_documents\Day8_lab1_practice.md](../daily_documents/Day8_lab1_practice.md)
