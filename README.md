@@ -532,6 +532,10 @@ cause: Exception(InstructionPageFault), stval: 0
 
 感觉自己具体操作系统工程实践方面还是了解的不够多，与其去测试一些新增加的算法，不如先学一点别的东西，可以互相对比照应；
 
+### 问题
+
+- [https://github.com/rcore-os/zCore/issues/75](https://github.com/rcore-os/zCore/issues/75) 遇到了和这个issue一样的bug
+
 ## Day 26 2020/7/26
 
 ### 事件1：lab3 实现时钟页面置换算法
@@ -541,3 +545,16 @@ cause: Exception(InstructionPageFault), stval: 0
 参考这里：
 
 [daily_documents\Day18_lab3_practice.md](daily_documents/Day18_lab3_practice.md)
+
+另外也大致了解了一下 rCore 和 zCore 的整个架构；
+
+## Day 27 2020/7/27
+
+### 事件1：lab3 的一点小修复
+
+好像有一点问题...（被公开处刑了）...要去修复一下
+
+### 事件2：继续学习
+
+- 今天忙了一点小学期的收尾工作，所以没做太多
+- 继续看《Linux 内核分析与应用》
