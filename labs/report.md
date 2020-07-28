@@ -2929,6 +2929,184 @@ pub struct Mapping {
 
 4. 实验：了解并实现时钟页面置换算法（或任何你感兴趣的算法），可以自行设计样例来比较性能（等等
 
+
+先看看这个页面置换是怎么做的：
+
+os/src/interrupt/handler.rs
+
+```rs
+/// 处理缺页异常
+///
+/// todo: 理论上这里需要判断访问类型，并与页表中的标志位进行比对
+fn page_fault(context: &mut Context, scause: Scause, stval: usize) -> *mut Context {
+    static mut COUNT: usize = 0;
+    println!("page_fault {}", unsafe {
+        COUNT += 1;
+        COUNT
+    });
+    let current_thread = PROCESSOR.lock().current_thread();
+    let memory_set = &mut current_thread.process.inner().memory_set;
+
+    match memory_set.mapping.handle_page_fault(stval) {
+        Ok(_) => {
+            memory_set.activate();
+            context
+        }
+        Err(msg) => fault(msg, scause, stval),
+    }
+}
+
+
+```
+
+os/src/memory/mapping/mapping.rs
+
+```rs
+
+/// 处理缺页异常
+    pub fn handle_page_fault(&mut self, stval: usize) -> MemoryResult<()> {
+        // 发生异常的访问页面
+        let vpn = VirtualPageNumber::floor(stval.into());
+        // 该页面如果在进程的内存中，则应该在 Swap 中，将其取出
+        let swap_tracker: SwapTracker = self
+            .swapped_pages
+            .remove(&vpn)
+            .ok_or("stval page is not mapped")?;
+        // 读取该页面的数据
+        let page_data = swap_tracker.read();
+
+        if self.mapped_pairs.full() {
+            // 取出一个映射
+            let (popped_vpn, mut popped_frame) = self.mapped_pairs.pop().unwrap();
+            // 交换数据
+            swap_tracker.write(&*popped_frame);
+            (*popped_frame).copy_from_slice(&page_data);
+            // 修改页表映射
+            self.invalidate_one(popped_vpn)?;
+            let entry = self.remap_one(vpn, popped_frame.page_number())?;
+            // 更新记录
+            self.mapped_pairs.push(vpn, popped_frame, entry);
+            self.swapped_pages.insert(popped_vpn, swap_tracker);
+        } else {
+            // 添加新的映射
+            let mut frame = FRAME_ALLOCATOR.lock().alloc()?;
+            // 复制数据
+            (*frame).copy_from_slice(&page_data);
+            // 更新映射
+            let entry = self.remap_one(vpn, frame.page_number())?;
+            // 更新记录
+            self.mapped_pairs.push(vpn, frame, entry);
+        }
+        Ok(())
+    }
+
+```
+
+通过查找，可以看到最多使用的物理页面数量设置是这样的：
+
+```rs
+/// 内核进程最多使用的物理页面数量
+pub const KERNEL_PROCESS_FRAME_QUOTA: usize = 16;
+/// 用户进程最多使用的物理页面数量
+pub const USER_PROCESS_FRAME_QUOTA: usize = 16;
+```
+
+这里实现的时钟页面置换算法：
+
+```rs
+
+pub struct ClockSwapper {
+    /// 记录映射和添加的顺序
+    queue: Vec<(VirtualPageNumber, FrameTracker, usize)>,
+    /// 映射数量上限
+    quota: usize,
+}
+
+
+impl Swapper for ClockSwapper {
+
+    fn new(quota: usize) -> Self {
+        Self {
+            queue: Vec::new(),
+            quota,
+        }
+    }
+    fn full(&self) -> bool {
+        self.queue.len() == self.quota
+    }
+    fn pop(&mut self) -> Option<(VirtualPageNumber, FrameTracker)> {
+        let len = self.queue.len()-1;
+        let mut index:usize = 0;
+        let mut isfound:bool = false;
+        unsafe{
+            loop{
+                for i in 0..(len+1){
+                    let pe = self.queue[i].2.clone() as *mut PageTableEntry;
+                    //println!("{:?}",(*pe));
+                    let mut flags = (*pe).flags().clone();
+                    if flags.contains(Flags::ACCESSED) {
+                        flags.set(Flags::ACCESSED,false);
+                        //println!("{:?}",flags);
+                        (*pe).set_flags(flags);
+                    } else {
+                        //println!("{:?}",flags);
+                        index = i;
+                        isfound = true;
+                        break;
+                    }
+                }
+                if isfound {
+                    break;
+                }
+            }
+        }
+        println!("{:?}",index);
+        let f = self.queue.remove(index);
+        Some((f.0,f.1))
+    }
+    fn push(&mut self, vpn: VirtualPageNumber, frame: FrameTracker, entry: *mut PageTableEntry) {
+        self.queue.push((vpn, frame, entry as usize));
+    }
+    fn retain(&mut self, predicate: impl Fn(&VirtualPageNumber) -> bool) {
+        self.queue.retain(|(vpn, _, _)| predicate(vpn));
+    }
+}
+
+
+
+```
+
+测试：
+
+中间打印的部分log:
+
+```rs
+0,PageTableEntry { value: 539831495, page_number: PhysicalPageNumber(527179), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+1,PageTableEntry { value: 539844743, page_number: PhysicalPageNumber(527192), flags: VALID | READABLE | WRITABLE | DIRTY }
+page_fault 200
+0,PageTableEntry { value: 539831495, page_number: PhysicalPageNumber(527179), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+1,PageTableEntry { value: 539830471, page_number: PhysicalPageNumber(527178), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+2,PageTableEntry { value: 539827399, page_number: PhysicalPageNumber(527175), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+3,PageTableEntry { value: 539832519, page_number: PhysicalPageNumber(527180), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+4,PageTableEntry { value: 539833543, page_number: PhysicalPageNumber(527181), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+5,PageTableEntry { value: 539834567, page_number: PhysicalPageNumber(527182), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+6,PageTableEntry { value: 539835591, page_number: PhysicalPageNumber(527183), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+7,PageTableEntry { value: 539836615, page_number: PhysicalPageNumber(527184), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+8,PageTableEntry { value: 539837639, page_number: PhysicalPageNumber(527185), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+9,PageTableEntry { value: 539838663, page_number: PhysicalPageNumber(527186), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+10,PageTableEntry { value: 539839687, page_number: PhysicalPageNumber(527187), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+11,PageTableEntry { value: 539840711, page_number: PhysicalPageNumber(527188), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+12,PageTableEntry { value: 539841735, page_number: PhysicalPageNumber(527189), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+13,PageTableEntry { value: 539842759, page_number: PhysicalPageNumber(527190), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+14,PageTableEntry { value: 539843783, page_number: PhysicalPageNumber(527191), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+15,PageTableEntry { value: 539844807, page_number: PhysicalPageNumber(527192), flags: VALID | READABLE | WRITABLE | ACCESSED | DIRTY }
+0,PageTableEntry { value: 539831431, page_number: PhysicalPageNumber(527179), flags: VALID | READABLE | WRITABLE | DIRTY }
+page_fault 201
+0,PageTableEntry { value: 539830407, page_number: PhysicalPageNumber(527178), flags: VALID | READABLE | WRITABLE | DIRTY }
+test passed
+
+```
+
 # lab4 学习报告
 
 lab4 涉及：
