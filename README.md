@@ -564,3 +564,13 @@ cause: Exception(InstructionPageFault), stval: 0
 ## Day 28 2020/7/28
 
 是摸鱼的一天呢
+
+中啦
+
+## Day 29 2020/7/29
+
+[深入分析Linux内核源代码阅读笔记](daily_documents/深入分析Linux内核源代码阅读笔记.md) 第一章、第二章
+
+- i386 真的比 RISC-V 麻烦多了
+
+## Day 29 2020/7/30
