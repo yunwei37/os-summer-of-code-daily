@@ -528,7 +528,7 @@ cause: Exception(InstructionPageFault), stval: 0
 
 尝试阅读了一下 rCore 和 zCore 的源代码；
 
-看了一些学堂在线《Linux 内核分析与应用》课程；
+学堂在线《Linux 内核分析与应用》课程：概述、中断、进程
 
 感觉自己具体操作系统工程实践方面还是了解的不够多，与其去测试一些新增加的算法，不如先学一点别的东西，可以互相对比照应；
 
@@ -559,7 +559,7 @@ cause: Exception(InstructionPageFault), stval: 0
 ### 事件2：继续学习
 
 - 今天忙了一点小学期的收尾工作，所以没做太多
-- 继续看《Linux 内核分析与应用》
+- 继续看《Linux 内核分析与应用》；
 
 ## Day 28 2020/7/28
 
@@ -571,6 +571,18 @@ cause: Exception(InstructionPageFault), stval: 0
 
 [深入分析Linux内核源代码阅读笔记](daily_documents/深入分析Linux内核源代码阅读笔记.md) 第一章、第二章
 
-- i386 真的比 RISC-V 麻烦多了
+## Day 30 2020/7/30
 
-## Day 29 2020/7/30
+[深入分析Linux内核源代码阅读笔记](daily_documents/深入分析Linux内核源代码阅读笔记.md) 第三章、第四章、第五章
+
+《Linux 内核分析与应用》系统调用
+
+## Day 31 2020/7/31
+
+- 继续看了部分《rust编程之道的章节》
+- 《Linux 内核分析与应用》
+- 尝试运行 rCore 和 zCore，浏览了一下相关文档；
+
+## Day 32 2020/8/1
+
+- 准备出发
