@@ -594,15 +594,15 @@ cause: Exception(InstructionPageFault), stval: 0
 - 《Linux 内核分析与应用》
 - 尝试运行 rCore 和 zCore，浏览了一下相关文档；
 
-## Day 31 2020/8/1
+## Day 32 2020/8/1
 
-## Day 32 2020/8/2
+## Day 33 2020/8/2
 
 - 准备出发
 - 在火车上浏览了部分 zCore-Tutorial 的教程；
 - 看了看 zCore 的系统调用部分；
 
-## Day 33 2020/8/3
+## Day 34 2020/8/3
 
 ### 参考相关资料
 
@@ -611,3 +611,8 @@ cause: Exception(InstructionPageFault), stval: 0
 - [zircon-notes](https://github.com/PanQL/zircon-notes)
 - [fuchsia-docs-zh-CN](https://github.com/zhangpf/fuchsia-docs-zh-CN/issues)
 
+大致浏览了一遍相关资料（虽然很大一部分没看懂
+
+## Day 35 2020/8/4
+
+继续浏览代码；
