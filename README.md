@@ -611,8 +611,34 @@ cause: Exception(InstructionPageFault), stval: 0
 - [zircon-notes](https://github.com/PanQL/zircon-notes)
 - [fuchsia-docs-zh-CN](https://github.com/zhangpf/fuchsia-docs-zh-CN/issues)
 
-大致浏览了一遍相关资料（虽然很大一部分没看懂
+大致浏览了一遍相关资料（虽然很大一部分没看懂），目前对整个 zCore 的大致框架已经有了一个概念
 
 ## Day 35 2020/8/4
 
-继续浏览代码；
+- 继续浏览代码；
+- 不知道为什么头很晕...
+
+
+## Day 36 2020/8/5
+
+### 事件1：linux-syscall 的注释文档完善
+
+相关 pull-request: [https://github.com/rcore-os/zCore/pull/125](https://github.com/rcore-os/zCore/pull/125)
+
+这一部分主要参考linux的文档：system reference manuals section 2: System calls 
+
+另外也尝试简单地修复了一下 `uname` 的系统调用，似乎要把 `rCore` 换成 `Linux` 才可以；
+
+### 一些疑问 & TODO
+
+- 还有很大一部分 `syscall` 并没有完成移植，这部分可能是接下来的主要目标；希望能跑起来 `gcc` 作为这一个月的目标；
+- 需要进一步完善相关单元测试，可以以单元测试驱动开发；
+- 尝试补全 Linux-loader 和 Linux-object 的代码；
+- 目前只是实现了 `linux syscall` 的一个小子集，很多部分的代码也并不完善；接下来打算先整理一个 `TODO` 的列表出来：
+  -  GCC 需要使用哪些系统调用；
+  -  哪些系统调用可以用空调用函数蒙混过关；
+  -  哪些系统调用需要继续完善；
+  -  哪些系统调用可以很方便地移植；
+  -  哪些系统调用很复杂但是一定需要实现（实现一个子集）；
+  -  哪些系统调用有 bug
+- 在跑起来 GCC 和 make 之后，可以尝试 libc-test
