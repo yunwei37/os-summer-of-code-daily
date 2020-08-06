@@ -642,3 +642,15 @@ cause: Exception(InstructionPageFault), stval: 0
   -  哪些系统调用很复杂但是一定需要实现（实现一个子集）；
   -  哪些系统调用有 bug
 - 在跑起来 GCC 和 make 之后，可以尝试 libc-test
+
+## Day 37 2020/8/6
+
+- 之前的 pull-request 被合并啦
+
+### 完善了一点 linux-loader 的注释和测试；
+
+相关 pull-request: [https://github.com/rcore-os/zCore/pull/128](https://github.com/rcore-os/zCore/pull/128)
+
+- 系统调用的错误处理似乎并不是特别完善；感觉可以再想想会不会有更好的错误处理方案；
+- 感觉 pipe 的 syscall 似乎并不是很复杂，也许可以尝试一下；
+
