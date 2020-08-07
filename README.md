@@ -606,6 +606,8 @@ cause: Exception(InstructionPageFault), stval: 0
 
 ### 参考相关资料
 
+今天是 Hackthon 的第一天
+
 - [2020操作系统课程设计：zCore的增强报告](http://os.cs.tsinghua.edu.cn/oscourse/OS2020spring/projects/g08?action=AttachFile&do=view&target=report.pdf)
 - [A development of zCore sycall](https://github.com/GCYYfun/DailySchedule/blob/master/doc/blog/A_development_of_zCore_sycall.md)
 - [zircon-notes](https://github.com/PanQL/zircon-notes)
@@ -613,10 +615,12 @@ cause: Exception(InstructionPageFault), stval: 0
 
 大致浏览了一遍相关资料（虽然很大一部分没看懂），目前对整个 zCore 的大致框架已经有了一个概念
 
+> 晚上去吃了好吃的
+
 ## Day 35 2020/8/4
 
-- 继续浏览代码；
-- 不知道为什么头很晕...
+- 继续浏览代码，准备开始干活；
+- 不知道为什么头很晕...可能强度有点大
 
 
 ## Day 36 2020/8/5
@@ -654,3 +658,36 @@ cause: Exception(InstructionPageFault), stval: 0
 - 系统调用的错误处理似乎并不是特别完善；感觉可以再想想会不会有更好的错误处理方案；
 - 感觉 pipe 的 syscall 似乎并不是很复杂，也许可以尝试一下；
 
+## Day 37 2020/8/7
+
+### 事件1：代码改进
+
+- 搭建了相关的单元测试框架，但还没有得到合并；
+  
+  大概是这样的：
+
+  Currently you can add c language unit test like this:
+
+  1. add c files in `linux-syscall/test/`;
+  2. add a cargo unit test in `linux-loader` like ( the program name is the same as source file )
+    ```
+    #[async_std::test]
+    async fn test_pipe() {
+        test("/bin/testpipe1").await;
+    }
+    ```
+  - if you want to run the unit test locally right away, you can run `make rootfs` again.
+  - if you want to inspect the output of program, maybe output the content to a file and read it in rust can be helpful.  
+
+- 完善了 `pipe` 的 syscall，并增加了相关测试；
+- 具体内容可以参考 pull-request；
+
+### 接下来的大概计划
+
+- 对于 rCore 异步相关的代码有更多的了解，向勇老师提及的将操作系统内部的 syscall 等机制全部替换为 async 的异步协程确实是个非常有趣的话题，值得进一步探究
+- 对于 zCore 来说，我们需要用这种机制完成信号量等内容；
+- 测试覆盖和文档内容还需要继续增加，同时通过测试来发现 bug ；
+
+> 这几天的内容结束啦
+> 
+> 这是我第一次参加这样的活动，感觉认识了非常多厉害的朋友，收获也非常丰富呢
