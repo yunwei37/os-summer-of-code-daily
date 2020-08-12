@@ -696,3 +696,17 @@ cause: Exception(InstructionPageFault), stval: 0
 
 - 尝试跑起来了 libc-test
 - 加了点 time 的系统调用
+
+## Day 40 2020/8/9
+
+- libc-test 似乎还是有一点编译上面的问题？某些测试可以运行但是并不能正常测试
+- 另外补上了 sys_utimensat，现在可以正常使用 touch 创建文件；
+
+## Day 42 2020/8/11
+
+- 修改了一点之前犯蠢的测试代码，现在可以使用c语言进行正常的单元测试；
+- pull-request: [#135](https://github.com/rcore-os/zCore/pull/135) ,包含time和touch相关的被合并啦
+
+## Day 43 2020/8/12
+
+- 一些文档和杂七杂八的系统调用接口以及测试的打杂的活：[#142](https://github.com/rcore-os/zCore/pull/142)
