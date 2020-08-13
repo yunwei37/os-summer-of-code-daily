@@ -709,4 +709,10 @@ cause: Exception(InstructionPageFault), stval: 0
 
 ## Day 43 2020/8/12
 
-- 一些文档和杂七杂八的系统调用接口以及测试的打杂的活：[#142](https://github.com/rcore-os/zCore/pull/142)
+- 一些文档和杂七杂八的系统调用接口以及测试的打杂的活：[#142](https://github.com/rcore-os/zCore/pull/142) 已经被合并
+
+## Day 44 2020/8/13
+
+- 目前的状态是 rustc 可以运行输出帮助信息，但还暂时没有办法进行正常编译；通过查日志可以发现可能是 pipe 之后跟着的 poll 的问题，显示有事件阻塞；
+- ly 大佬已经把 eventbus 修好了，之后去加一下 pipe 的 eventbus 相关内容；
+- 准备去修复一下 rcore-fs 里面 symbol link 相关， 可能要实现 pipe2 函数；
