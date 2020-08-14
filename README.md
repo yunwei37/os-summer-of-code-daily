@@ -709,10 +709,18 @@ cause: Exception(InstructionPageFault), stval: 0
 
 ## Day 43 2020/8/12
 
-- 一些文档和杂七杂八的系统调用接口以及测试的打杂的活：[#142](https://github.com/rcore-os/zCore/pull/142) 已经被合并
+- 一些文档和杂七杂八的系统调用接口以及测试的打杂的活,具体参考这里：[#142](https://github.com/rcore-os/zCore/pull/142) 
+- 已经被合并
 
 ## Day 44 2020/8/13
 
 - 目前的状态是 rustc 可以运行输出帮助信息，但还暂时没有办法进行正常编译；通过查日志可以发现可能是 pipe 之后跟着的 poll 的问题，显示有事件阻塞；
 - ly 大佬已经把 eventbus 修好了，之后去加一下 pipe 的 eventbus 相关内容；
-- 准备去修复一下 rcore-fs 里面 symbol link 相关， 可能要实现 pipe2 函数；
+- 准备去修复一下 rcore-fs 里面 symbol link 相关， 可能要实现 create2 函数；
+- ly 大佬编译好了 gcc 并成功在上面跑起来啦！
+- libc-test 目前的想法是写个脚本先试着运行一下并查看输出，可能是function部分某些函数无法获取的原因有时并不能正常使用；
+- 这两天也有些时候在解决测量学实验和计算机组成课程的内容，以及其他杂七杂八的考试，所以时间有可能会稍微不那么多一点...
+
+## Day 45 2020/8/14
+
+- 着手修复 pipe 的相关问题
