@@ -699,7 +699,7 @@ cause: Exception(InstructionPageFault), stval: 0
 
 ## Day 40 2020/8/9
 
-- libc-test 似乎还是有一点编译上面的问题？某些测试可以运行但是并不能正常测试
+- libc-test 似乎还是有一点编译上面的问题？某些测试可以运行但是并不能正常测试，可能是并没有正确调用系统调用函数；math部分可以正常运行；也可能是编译环境的问题
 - 另外补上了 sys_utimensat，现在可以正常使用 touch 创建文件；
 
 ## Day 42 2020/8/11
@@ -718,9 +718,10 @@ cause: Exception(InstructionPageFault), stval: 0
 - ly 大佬已经把 eventbus 修好了，之后去加一下 pipe 的 eventbus 相关内容；
 - 准备去修复一下 rcore-fs 里面 symbol link 相关， 可能要实现 create2 函数；
 - ly 大佬编译好了 gcc 并成功在上面跑起来啦！
-- libc-test 目前的想法是写个脚本先试着运行一下并查看输出，可能是function部分某些函数无法获取的原因有时并不能正常使用；
+- libc-test 目前的想法是写个脚本先试着运行一下并查看输出；
 - 这两天也有些时候在解决测量学实验和计算机组成课程的内容，以及其他杂七杂八的考试，所以时间有可能会稍微不那么多一点...
 
 ## Day 45 2020/8/14
 
-- 着手修复 pipe 的相关问题
+- 着手修复 pipe 的相关问题，加上了 async-poll 但还是不能正常使用；
+- 可以考虑把libc-test在zcore上面编译运行
