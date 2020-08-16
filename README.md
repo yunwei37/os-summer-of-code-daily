@@ -725,3 +725,18 @@ cause: Exception(InstructionPageFault), stval: 0
 
 - 着手修复 pipe 的相关问题，加上了 async-poll 但还是不能正常使用；
 - 可以考虑把libc-test在zcore上面编译运行
+
+## Day 46 2020/8/15
+
+- 例会；
+- wrj学长解决了 libc-test 的 github ci 部署的事情；
+- 提交了一个相关的pr，解决了一下 shell 里面命令执行 path 的问题：[#149](https://github.com/rcore-os/zCore/pull/149) ，顺带加了一下pipe
+
+## Day 47 2020/8/16
+
+- 今天去试着跑了一下 libc-test：
+  - [#152](https://github.com/rcore-os/zCore/pull/152) 解决了一个小测试，顺带补了一点文档；
+  - 似乎很多没办法通过的测试还是和 symlink 的绝对路径相关；
+  - 浮点数运算差异应该可以不用管
+  - 部分是系统调用还没有实现或者实现有部分差异；
+- 感觉接下来可以做一些 ipc 共享内存相关的部分？
