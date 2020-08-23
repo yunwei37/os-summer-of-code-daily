@@ -775,8 +775,20 @@ cause: Exception(InstructionPageFault), stval: 0
 
 - 以及我觉得接下来也可以把这段时间的一些工作，比如文档，新增加和改善的功能，整合到rcore里面去？
 
-## Day 52 2020/8/22
+## Day 53 2020/8/22
 
 - pull request: [#160](https://github.com/rcore-os/zCore/pull/160)
 - 大概写了一下关于共享内存的支持，参考mmap采用 vmObject 完成对虚拟内存段的映射（虽然理解还不是很深刻，也需要再看看具体有什么差异；
 - shmctl还没有，看看能不能整个（类似sem
+
+## Day 54 2020/8/23
+
+- 继续完善之前的 PR，完成了shmctl系统调用，并添加了对shmget的flag处理；
+- 基本可以通过 libc-test 的相关测试；
+
+## Day 55 2020/8/24
+
+- 去看了一下 io多路复用 的内容；
+- 目前不清楚 条件变量等的使用方式是否可以被 async 代替；
+- select 和 poll 的差异并不是很大；
+- （这两天有点晕晕的...而且下周就要考试了也要抓紧时间复习一下了...
