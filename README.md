@@ -5,6 +5,10 @@
 - practice：rust写的一些小程序
 - labs：rCore的lab
 
+在此阶段实现的简易操作系统仓库：[https://github.com/yunwei37/MyrCore](https://github.com/yunwei37/MyrCore)
+
+后续将会继续完善。
+
 可供检查的具体实现目录：
 
 - [rCore labs](labs)
@@ -790,5 +794,23 @@ cause: Exception(InstructionPageFault), stval: 0
 
 - 去看了一下 io多路复用 的内容；
 - 目前不清楚 条件变量等的使用方式是否可以被 async 代替；
-- select 和 poll 的差异并不是很大；
+- select 和 poll 的差异并不是很大，基本可以做；
 - （这两天有点晕晕的...而且下周就要考试了也要抓紧时间复习一下了...
+
+## Day 56 2020/8/25
+
+- 上一个pr已经被合并了；
+- 复习ing
+- 继续深入学习了一下 async/await 的相关知识；
+
+## Day 57 2020/8/26
+
+- PR: [164](https://github.com/rcore-os/zCore/pull/164)
+- 在 zcore 中完成 async、await 的 select syscall；
+- 添加相关的测试和文档；
+- 复习考试；
+
+## Day 58 2020/8/27
+
+- 参考：[Asynchronous Programming in Rust](https://rust-lang.github.io/async-book/02_execution/03_wakeups.html)，完善在 async select/poll 中设置定时器相关的工作；
+- 完成相关的 PR 并提交审核；
