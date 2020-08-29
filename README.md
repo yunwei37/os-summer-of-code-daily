@@ -14,6 +14,8 @@
 - [rCore labs](labs)
 - [rust practices](part1-exercises-for-rust)
 
+zCore 开发的最终报告：[https://github.com/yunwei37/zcore_migration_notes/blob/master/report.md](https://github.com/yunwei37/zcore_migration_notes/blob/master/report.md)
+
 ## TOC
 
 *七月*
@@ -31,10 +33,10 @@
 | Mon               | Tues              | Wed                          | Thur                         | Fri                          | Sat               | Sun               |
 | ----------------- | ----------------- | ---------------------------- | ---------------------------- | ---------------------------- | ----------------- | ----------------- |
 |                   |                   | 1 <br> ([D32](#day-1-202081)) | 2 <br> ([D33](#day-2-202082)) | 3 <br> ([D34](#day-3-202083)) | 4 <br> ([D35](#day-35-202084)) | 5 <br> ([D36](#day-36-202085)) |
-| 6 <br> ([D37](#day-37-202086)) | 7 <br> ([D38](#day-38-202087)) | 8 <br> ([D8](#day-8-202078))            | 9 <br> ([D9](#day-9-202079))            | 10 <br> ([D10](#day-10-2020710))         | 11  <br>  ([D11](#day-11-2020711))             | 12      <br>    ([D12](#day-12-2020712))       |
-| 13    <br>    ([D13](#day-13-2020713))             | 14         <br>    ([D14](#day-14-2020711))        | 15        <br>    ([D15](#day-15-2020715))                    | 16    <br>     ([D16](#day-16-2020716))                       | 17    <br>      ([D17](#day-17-2020717))                       | 18    <br>    ([D18](#day-18-2020718))            | 19   <br>     ([D19](#day-19-2020719))            |
-| 20   <br>    ([D20](#day-20-2020720))            | 21       <br>    ([D21](#day-21-2020721))         | 22     <br>    ([D22](#day-22-2020722))                         | 23     <br>    ([D23](#day-23-2020723))                         | 24    <br>    ([D24](#day-24-2020724))                        | 25      <br>    ([D25](#day-25-2020725))             | 26         <br>    ([D26](#day-26-2020726))           |
-| 27         <br>    ([D27](#day-27-2020727))           | 28                | 29                           | 30                           |                              |                   |                   |
+| 6 <br> ([D37](#day-37-202086)) | 7 <br> ([D38](#day-38-202087)) | 8 <br> ([D39](#day-39-202078))            | 9 <br> ([D40](#day-40-202079))            | 10 <br> ([D41](#day-41-2020710))         | 11  <br>  ([D42](#day-42-2020711))             | 12      <br>    ([D43](#day-43-2020712))       |
+| 13    <br>    ([D44](#day-44-2020713))             | 14         <br>    ([D45](#day-45-2020711))        | 15        <br>    ([D46](#day-46-2020715))                    | 16    <br>     ([D47](#day-47-2020716))                       | 17    <br>      ([D48](#day-48-2020817))                       | 18    <br>    ([D49](#day-18-2020718))            | 19   <br>     ([D50](#day-50-2020719))            |
+| 20   <br>    ([D51](#day-51-2020820))            | 21       <br>    ([D52](#day-52-2020721))         | 22     <br>    ([D53](#day-53-2020822))                         | 23     <br>    ([D54](#day-23-2020723))                         | 24    <br>    ([D55](#day-24-2020824))                        | 25      <br>    ([D56](#day-56-2020725))             | 26         <br>    ([D57](#day-57-2020726))           |
+| 27         <br>    ([D58](#day-58-2020827))           | 28        <br>    ([D59](#day-59-2020828))         | 29        ([D60](#day-60-2020829)                   | 30                           |                              |                   |                   |
 
 
 ------
@@ -814,3 +816,13 @@ cause: Exception(InstructionPageFault), stval: 0
 
 - 参考：[Asynchronous Programming in Rust](https://rust-lang.github.io/async-book/02_execution/03_wakeups.html)，完善在 async select/poll 中设置定时器相关的工作；
 - 完成相关的 PR 并提交审核；
+- 基本从 rCore 到 zCore 的迁移就吿一个段落了。
+
+## Day 59 2020/8/28
+
+- 完善报告文档和ppt：
+- 报告链接：[https://github.com/yunwei37/zcore_migration_notes/blob/master/report.md](https://github.com/yunwei37/zcore_migration_notes/blob/master/report.md)
+
+## Day 60 2020/8/29
+
+- 准备报告。
